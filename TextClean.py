@@ -1,6 +1,9 @@
+from Stopwords import stopword_list
+'''
+--Source--
+cerpenmu.com
+'''
 Myfile = open("cerpen.txt", "r", encoding='utf-8')
-#my text is named input.txt 
-#'r' along with file name depicts that we want to read it
 string_of_words = ""
 for x in Myfile:
     a_string = x;
@@ -11,4 +14,7 @@ for x in Myfile:
     string_of_words += alphanumeric
 
 list_string_of_words = string_of_words.split()
+list_string_without_stopwords = [word for word in list_string_of_words if word not in stopword_list]
+
+
 

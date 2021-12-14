@@ -1,17 +1,15 @@
 from Stopwords import stopword_list
-from TextClean import string_of_words, list_string_of_words
+from TextClean import string_of_words, list_string_of_words, list_string_without_stopwords
 
 
-def lastO(pola):
+def LastO(pola):
     last = [None]*128
-    for i in range(0,128,1):
-        last[i] = -1
-    for i in range(0, len(pola), 1):
-        last[ord(pola[i])] = i
+    for i in range(0,128,1): last[i] = -1
+    for i in range(0, len(pola), 1): last[ord(pola[i])] = i
     return last
 
-def searchBM(T,P):
-    last = lastO(P)
+def SearchBM(T,P):
+    last = LastO(P)
     n = len(T)
     m = len(P)
     i = m-1
@@ -40,12 +38,22 @@ def searchBM(T,P):
 
 def main():
     print(f"Banyak kata dalam file text : {len(list_string_of_words)}")
-    pola = ""
-    if pola in stopword_list:
-        print("Pola tidak boleh stopword")
-    else:
-        hasil = searchBM(string_of_words, pola)
+    print(f"Banyak kata dalam file text tanpa stopword : {len(list_string_without_stopwords)}")
+    pola = input("Masukkan pola yang ingin dicari : ")
+    pola = pola.split()
+    print(pola)
+    for kata in list(pola):
+        if kata in stopword_list:
+            print(f"{kata} adalah stopword, maka kata ini tidak akan dicari")
+            pola.remove(kata)
+    print(pola)
+    pola = " ".join(pola)
+    try:
+        print(f"Pola yang akan dicari : {pola}")
+        hasil = SearchBM(string_of_words, pola)
         print(hasil)
+    except:
+        print("String index out of range karena tidak ada kata selain stopword didalam pola")
 
 
 if __name__ == "__main__":
