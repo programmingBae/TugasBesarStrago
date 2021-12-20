@@ -1,5 +1,4 @@
-from Stopwords import stopword_list
-from TextClean import string_of_words, list_string_of_words, list_string_without_stopwords
+
 
 
 def LastO(pola):
@@ -9,6 +8,7 @@ def LastO(pola):
     return last
 
 def SearchBM(T,P):
+    list_found = []
     last = LastO(P)
     n = len(T)
     m = len(P)
@@ -19,10 +19,18 @@ def SearchBM(T,P):
     else:
         j = m-1
         Found = False
-        while (i < n) and (not Found):
+        index = 0
+        while (i < n) :
             if (P[j] == T[i]):
                 if (j == 0):
-                    Found = True
+                    if (i<n):
+                        list_found.append(i)
+                        print(f"{i}")
+                        j = j - 1;
+                        i = i - 1;
+                    else:
+                        list_found.append(i)
+                        print(f"{i}")
                 else:
                     j = j - 1;
                     i = i - 1;
@@ -30,30 +38,18 @@ def SearchBM(T,P):
                 lo = last[ord(T[i])]
                 i = i + m - min(j,1+lo)
                 j = m-1 #back to rightmost
-    if (Found):
-        hasil = i
+    if len(list_found)>0:
+        hasil = list_found
     else:
         hasil = -1
     return hasil
 
 def main():
-    print(f"Banyak kata dalam file text : {len(list_string_of_words)}")
-    print(f"Banyak kata dalam file text tanpa stopword : {len(list_string_without_stopwords)}")
-    pola = input("Masukkan pola yang ingin dicari : ")
-    pola = pola.split()
-    print(pola)
-    for kata in list(pola):
-        if kata in stopword_list:
-            print(f"{kata} adalah stopword, maka kata ini tidak akan dicari")
-            pola.remove(kata)
-    print(pola)
-    pola = " ".join(pola)
-    try:
-        print(f"Pola yang akan dicari : {pola}")
-        hasil = SearchBM(string_of_words, pola)
-        print(hasil)
-    except:
-        print("String index out of range karena tidak ada kata selain stopword didalam pola")
+    string_of_words = "Abed aku adalah aku yang abed adalah aku dengan aku abed adalh"
+    pola = "aku"
+    hasil = SearchBM(string_of_words, pola)
+    print(hasil)
+ 
 
 
 if __name__ == "__main__":
