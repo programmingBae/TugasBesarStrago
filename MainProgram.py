@@ -49,6 +49,8 @@ def SearchBM(T,P):
         return hasil
 
 def select_file():
+    text_box3.delete(1.0, END)
+    text_box.delete(1.0, END)
     browse_text.set("File Opened")
     file =  filedialog.askopenfilename(initialdir = "D:\pythoncoba\TugasBesarStrago",title = "Select file",filetypes = (("txt files","*.txt"),("all files","*.*")))
     TextClean = tc.TextClean(file)
@@ -119,13 +121,13 @@ def cari_pola():
     hasil = SearchBM(text,list_pola)
     if hasil != -1:
         string_text[list_pola] = len(hasil) 
-        text_box2.insert(tk.END, string_text)
         for j in hasil:
             # print(hasil)
             # print(f"{list_pola} ditemukan pada index {j}")
             akhir_kata = j + len(list_pola)
             text_box.tag_config("start", foreground="blue")
             text_box.tag_add("start", "1."+str(j), "1."+str(akhir_kata))
+    text_box2.insert(tk.END, string_text)
         
          
 
